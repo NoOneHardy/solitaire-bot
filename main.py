@@ -18,9 +18,13 @@ def codeablaufen():
     height = eckAss.height * 1080 / screen_height
     width = eckAss.width * 1920 / screen_width
 
-    eckAss.resize((width, height))
+    print("New:", height, width)
 
-    eck6 = pyautogui.center(pyautogui.locateOnScreen(eck6))
+    eckAss.resize((int(width), int(height)))
+
+    # eckAss.save('karten/eck/6.png')
+
+    eck6 = pyautogui.center(pyautogui.locateOnScreen(eckAss))
     print(eck6.x, ",", eck6.y)
 
     stack = pyautogui.center(pyautogui.locateOnScreen('karten/back.png'))
