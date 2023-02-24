@@ -13,18 +13,7 @@ print("Width =", screen_width)
 print("Height =", screen_height)
 
 def codeablaufen():
-    eckAss = Image.open('karten/eck/6.png')
-
-    height = eckAss.height * 1080 / screen_height
-    width = eckAss.width * 1920 / screen_width
-
-    print("New:", height, width)
-
-    eckAss.resize((int(width), int(height)))
-
-    # eckAss.save('karten/eck/6.png')
-
-    eck6 = pyautogui.center(pyautogui.locateOnScreen(eckAss))
+    eck6 = pyautogui.center(pyautogui.locateOnScreen('karten/eck/6.png'))
     print(eck6.x, ",", eck6.y)
 
     stack = pyautogui.center(pyautogui.locateOnScreen('karten/back.png'))
