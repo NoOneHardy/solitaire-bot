@@ -1,8 +1,6 @@
 import pyautogui
-from PIL import Image
 
 import tkinter as tk
-import time
 
 root = tk.Tk()
 
