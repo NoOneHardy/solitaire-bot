@@ -20,41 +20,33 @@ def codeablaufen():
     pyautogui.click(stack.x, stack.y)
 
 def searchCard(card, color):
-    info = pyautogui.center(pyautogui.locateOnScreen('karten/' + color + '/' + card + '.png', confidence=0.9))
-    return info
+    try:
+        info = pyautogui.center(pyautogui.locateOnScreen('karten/' + color + '/' + str(card) + '.png', confidence=0.9))
+        return info
+    except:
+        return 0
 
 def generateCards():
     color = 'eck'
-    eck = []
+    eck = [None] * 13
     for card in range (13):
-        try:
-            eck[card] = searchCard(card, color)
-        except:
-            pass
+        eck[card] = searchCard(card, color)
     
     color = 'schaufel'
-    schaufel = []
+    schaufel = [None] * 13
     for card in range (13):
-        try:
-            schaufel[card] =  pyautogui.center(pyautogui.locateOnScreen('karten/' + color + '/' + card + '.png', confidence=0.9))
-        except:
-            pass
+        schaufel[card] =  searchCard(card, color)
+
     
     color = 'herz'
-    herz = []
+    herz = [None] * 13
     for card in range (13):
-        try:
-            herz[card] = searchCard(card, color)
-        except:
-            pass
+        herz[card] = searchCard(card, color)
 
     color = 'kreuz'
-    kreuz = []
+    kreuz = [None] * 13
     for card in range (13):
-        try:
-            kreuz[card] = searchCard(card, color)
-        except:
-            pass
+        kreuz[card] = searchCard(card, color)
 
     print(eck)
     print(herz)
