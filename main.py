@@ -27,31 +27,36 @@ def searchCard(card, color):
         return 0
 
 def generateCards():
-    color = 'eck'
     eck = [None] * 13
-    for card in range (13):
-        eck[card] = searchCard(card, color)
-    
-    color = 'schaufel'
     schaufel = [None] * 13
-    for card in range (13):
-        schaufel[card] =  searchCard(card, color)
-
-    
-    color = 'herz'
     herz = [None] * 13
-    for card in range (13):
-        herz[card] = searchCard(card, color)
-
-    color = 'kreuz'
     kreuz = [None] * 13
-    for card in range (13):
-        kreuz[card] = searchCard(card, color)
 
-    print(eck)
-    print(herz)
-    print(schaufel)
-    print(kreuz)
+    for card in range (1, 14):
+        eck[card - 1] = searchCard(card, 'eck')
+        schaufel[card - 1] = searchCard(card, 'schaufel')
+        herz[card - 1] = searchCard(card, 'herz')
+        kreuz[card - 1] = searchCard(card, 'kreuz')
+
+    print()
+    print('Eck:')
+    for i in range(len(eck)):
+        print(eck[i])
+    
+    print()
+    print('Herz:')
+    for i in range(len(herz)):
+        print(herz[i])
+
+    print()
+    print('Schaufel:')
+    for i in range(len(schaufel)):
+        print(schaufel[i])
+
+    print()
+    print('Kreuz:')
+    for i in range(len(kreuz)):
+        print(kreuz[i])
 
 genCards=tk.Button(root, text='Karten', fg='black', command=generateCards)
 
