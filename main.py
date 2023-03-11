@@ -8,9 +8,6 @@ root = tk.Tk()
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
 
-print("Width =", screen_width)
-print("Height =", screen_height)
-
 def getCardName(card, eck, kreuz, herz, schaufel):
     for i in range (len(kreuz)):
         if card == kreuz[i]:
@@ -72,11 +69,19 @@ def codeablaufen():
     pyautogui.click(stack.x, stack.y)
 
 def searchCard(card, color):
-    try:
-        info = pyautogui.center(pyautogui.locateOnScreen('karten/' + color + '/' + str(card) + '.png', confidence=0.9))
+    conf = 1
+    info = None
+    while info == None and conf >= 0.9:
+        try:
+            info = pyautogui.center(pyautogui.locateOnScreen('karten/' + color + '/' + str(card) + '.png', confidence=conf))
+        except:
+            conf -= 0.01
+    
+    if info != None:
+        print(str(color) + ", " + str(card) + ": " + str(conf))
         return info
-    except:
-        return 0
+    else:
+        return 0           
 
 def generateCards():
     eck = [None] * 13
@@ -93,74 +98,87 @@ def generateCards():
     print()
     print('Eck:')
     for i in range(len(eck)):
+        #time.sleep(2)
+        #pyautogui.click(eck[i].x, eck[i].y)
         print(eck[i])
     
     print()
     print('Herz:')
     for i in range(len(herz)):
+        #time.sleep(2)
+        #pyautogui.click(herz[i].x, herz[i].y)
         print(herz[i])
 
     print()
     print('Schaufel:')
     for i in range(len(schaufel)):
+        #time.sleep(2)
+        #pyautogui.click(schaufel[i].x, schaufel[i].y)        
         print(schaufel[i])
 
     print()
     print('Kreuz:')
     for i in range(len(kreuz)):
+        #time.sleep(2)
+        #pyautogui.click(kreuz[i].x, kreuz[i].y)
         print(kreuz[i])
 
     return kreuz, eck, herz, schaufel
 
-def getCardTopRight():
-    kreuz, eck, herz, schaufel = generateCards()
+def getCardTopLeft(kreuz, eck, herz, schaufel):
 
-    card1 = 'Unknown'
+    cardTopLeft = 'Unknown'
     card1Name = 'Unknown'
     for card in range (len(kreuz)):
         if kreuz[card] != 0:
-            card1 = kreuz[card]
+            cardTopLeft = kreuz[card]
             break
         elif eck[card] != 0:
-            card1 = eck[card]
+            cardTopLeft = eck[card]
             break
         elif herz[card] != 0:
-            card1 = herz[card]
+            cardTopLeft = herz[card]
             break
         elif schaufel[card] != 0:
-            card1 = schaufel[card]
+            cardTopLeft = schaufel[card]
             break
 
-    card1Name = getCardName(card1, eck, kreuz, herz, schaufel)
+    card1Name = getCardName(cardTopLeft, eck, kreuz, herz, schaufel)
 
     for card in range (len(eck)):
         if eck[card] != 0:
-            if card1.x > eck[card].x or card1.y > eck[card].y:
-                card1 = eck[card]
+            if cardTopLeft.x > eck[card].x or cardTopLeft.y > eck[card].y:
+                cardTopLeft = eck[card]
                 card1Name = getCardName(eck[card], eck, kreuz, herz, schaufel)
         
         if herz[card] != 0:
-            if card1.x > herz[card].x or card1.y > herz[card].y:
-                card1 = herz[card]
+            if cardTopLeft.x > herz[card].x or cardTopLeft.y > herz[card].y:
+                cardTopLeft = herz[card]
                 card1Name = getCardName(herz[card], eck, kreuz, herz, schaufel)
         
         if schaufel[card] != 0:
-            if card1.x > schaufel[card].x or card1.y > schaufel[card].y:
-                card1 = schaufel[card]
+            if cardTopLeft.x > schaufel[card].x or cardTopLeft.y > schaufel[card].y:
+                cardTopLeft = schaufel[card]
                 card1Name = getCardName(schaufel[card], eck, kreuz, herz, schaufel)
         
         if kreuz[card] != 0:
-            if card1.x > kreuz[card].x or card1.y > kreuz[card].y:
-                card1 = kreuz[card]
+            if cardTopLeft.x > kreuz[card].x or cardTopLeft.y > kreuz[card].y:
+                cardTopLeft = kreuz[card]
                 card1Name = getCardName(kreuz[card], eck, kreuz, herz, schaufel)
 
     
-    print(card1)
+    print(cardTopLeft)
     print(card1Name)
-    pyautogui.click(card1.x, card1.y)
+    return cardTopLeft
 
+def getFirstCards():
+    #kreuz, eck, herz, schaufel = generateCards()
 
-genCards=tk.Button(root, text='Karten', fg='black', command=getCardTopRight)
+    cards = [[None] * 24] * 8
+    cards[1][0] = 'Test' #getCardTopLeft(kreuz, eck, herz, schaufel)
+    print(cards)
+    
+genCards=tk.Button(root, text='Karten', fg='black', command=getFirstCards)
 
 btn=tk.Button(root, text="ok", fg='blue', command=codeablaufen)
 btn.place(x=80, y=100)
